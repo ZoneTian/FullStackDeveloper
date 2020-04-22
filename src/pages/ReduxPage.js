@@ -5,6 +5,11 @@ import { connect } from 'react-redux'
 
 @connect(
   ({home})=>({count:home}),
+  {
+    add:()=>
+     ( {type:'ADD',payload:1})
+    
+  }
 )
 class ReduxPage extends Component {
   // componentDidMount(){
@@ -17,9 +22,9 @@ class ReduxPage extends Component {
   // componentWillUnmount(){
   //   this.unsubscribe &&   this.unsubscribe()
   // }
-  add=()=>{
-      this.props.dispatch({type:'ADD',payload:1})
-  }
+  // add=()=>{
+  //     this.props.dispatch({type:'ADD',payload:1})
+  // }
   // Aysnadd = ()=>{
   //   store.dispatch((dispatch,getState)=>{
   //     setTimeout(()=>{
@@ -32,7 +37,7 @@ class ReduxPage extends Component {
   //   store.dispatch(Promise.resolve({type:'MINUS',payload:100}))
   // }
   render() {
-    const { count} = this.props
+    const { count,add} = this.props
     return (
       <div>
         <h3>reduxpage</h3>
@@ -40,7 +45,7 @@ class ReduxPage extends Component {
        <div><button onClick = {this.Aysnadd }> Aysnadd </button></div> 
        <div><button onClick = {this.promiseMinus }> promiseMinus</button></div> 
 
-        <button onClick = {this.add }> add </button>
+        <button onClick = {add }> add </button>
       </div>
     )
   }
