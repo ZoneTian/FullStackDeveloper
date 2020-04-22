@@ -30,7 +30,7 @@ export default class ReduxPage extends Component {
     return (
       <div>
         <h3>reduxpage</h3>
-        <div >{store.getState()}</div>
+        <div >{store.getState().home}</div>
        <div><button onClick = {this.Aysnadd }> Aysnadd </button></div> 
        <div><button onClick = {this.promiseMinus }> promiseMinus</button></div> 
 

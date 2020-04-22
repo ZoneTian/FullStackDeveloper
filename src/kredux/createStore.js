@@ -20,10 +20,11 @@ export default function createStore(reducer,enhancer) {
   function subscribe(listener) {
     currentListeners.push(listener);
     return ()=>{
-      currentListeners = []
+      const index = currentListeners.indexOf(listener)
+      currentListeners.splice(index,1)
     }
   }
-  // dispatch({type:'KKKK'})
+  dispatch({type:'KKKK'})
 
   return {
     getState,

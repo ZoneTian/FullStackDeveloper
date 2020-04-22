@@ -1,14 +1,15 @@
 // import createStore from "./createStore";
 
 export default function applyMiddleware(...middlewares){
-    console.log(middlewares,'123')
     return createStore => reducer => {
         let store = createStore(reducer)
         let dispatch = store.dispatch;
+        
         const midApi = {
             getState:store.getState,
             dispatch
         }
+        console.log(store.getState())
         const miiddlewareChain =middlewares.map(md=>md(midApi))
         
         dispatch = compose(...miiddlewareChain)(store.dispatch)
@@ -21,7 +22,6 @@ export default function applyMiddleware(...middlewares){
 
 }
 function compose(...funcs) {
-    console.log(funcs)
     if (funcs.length === 0) {
       return arg => arg
     }

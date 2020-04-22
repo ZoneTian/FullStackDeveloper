@@ -1,7 +1,7 @@
 // import {createStore ,applyMiddleware} from "redux";
 // import thunk from 'redux-thunk'
 // import logger from 'redux-logger'
-import { createStore, applyMiddleware } from "../kredux/";
+import { createStore, applyMiddleware,combineReducers } from "../kredux/";
 import isPromise from 'is-promise'
 import { isFSA } from 'flux-standard-action'
 //定义修改规则
@@ -16,7 +16,7 @@ export const counterReducer = (state = 0, { type, payload = 1 }) => {
   }
 };
 
-const store = createStore(counterReducer, applyMiddleware(thunk, logger, rdPromise));
+const store = createStore(combineReducers({home:counterReducer}), applyMiddleware(thunk, logger, rdPromise));
 function logger({ getState }) {
   return next => action => {
     console.log("prev", getState());
