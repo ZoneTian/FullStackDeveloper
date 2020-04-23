@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useLayoutEffect, useReducer } from 'react'
 
 const Context = React.createContext()
 
@@ -15,13 +15,14 @@ export const connect = (mapStateToProps, mapDispatchToProps) => WraperComponent 
     const { getState, dispatch, subscribe } = context
     const stateProps = mapStateToProps(getState())
     const dispatchProps = { dispatch }
-    console.log(dispatchProps)
+    console.log(stateProps,mapDispatchToProps,dispatchProps)
     const [, forceUpdate] = useReducer(x => x + 1, 0)
-    useEffect(() => {
-        subscribe(() => {
+    useLayoutEffect(() => {
+      const unsubscribe =   subscribe(() => {
             forceUpdate()
         })
-    })
+        return ()=>{unsubscribe()}
+    },[])
     return <WraperComponent {...props} {...stateProps} {...dispatchProps} />
 }
 

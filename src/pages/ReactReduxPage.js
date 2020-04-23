@@ -20,7 +20,11 @@ export default connect(
         }
     }
     )(class ReactReduxPage extends React.Component {
-     
+        dispatchAdd = () => {
+            this.props.dispatch({
+              type: "ADD"
+            });
+          };
         render(){
             const { add } = this.props
             console.log('====================================');
@@ -30,6 +34,7 @@ export default connect(
                 <div>
                     <h3>ReactReduxPage</h3>
                     <p>{this.props.home}</p>
+                    <button onClick={this.dispatchAdd}>dispatch add</button>
                     <button onClick={add}>add</button>
                 </div>
             )
