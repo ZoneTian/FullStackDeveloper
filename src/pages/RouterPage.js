@@ -6,7 +6,7 @@ import HomePage from './HomePage'
 import LoginPage from './LoginPage'
 import UserPage from './UserPage'
 import ErrorPage from './ErrorPage'
-
+import PrivateRoute from './PrivateRoute'
 function RouterPage(props) {
     return (
         <div>
@@ -18,8 +18,9 @@ function RouterPage(props) {
 
                 <Switch>
                     <Route path='/' exact component={HomePage} children={ChildrenCMP} render={RenderCMP}></Route>
+                    <PrivateRoute  path='/user' component={UserPage}/> 
                     <Route strict exact sensitive path='/login' component={LoginPage}></Route>
-                    <Route strict exact  sensitive path='/user' component={UserPage}></Route>
+                    {/* <Route strict exact  sensitive path='/user' component={UserPage}></Route> */}
                     <Route component={ErrorPage}></Route>
 
                 </Switch>
