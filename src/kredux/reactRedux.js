@@ -1,4 +1,5 @@
 import React, { useContext, useLayoutEffect, useReducer } from 'react'
+import { bindActionCreators } from './index'
 
 const Context = React.createContext()
 
@@ -11,18 +12,26 @@ export function Provider({ children, store }) {
 }
 export const connect = (mapStateToProps, mapDispatchToProps) => WraperComponent => props => {
     const context = useContext(Context)
-    console.log(context,'creators')
     const { getState, dispatch, subscribe } = context
     const stateProps = mapStateToProps(getState())
-    const dispatchProps = { dispatch }
-    console.log(stateProps,mapDispatchToProps,dispatchProps)
+    let dispatchProps = { dispatch }
+    if (typeof mapStateToProps === 'function') {
+        dispatchProps = mapDispatchToProps(dispatch)
+    }else if (typeof mapDispatchToProps === 'object') {
+        dispatchProps = bindActionCreators(mapDispatchToProps,dispatch)
+    }
     const [, forceUpdate] = useReducer(x => x + 1, 0)
     useLayoutEffect(() => {
       const unsubscribe =   subscribe(() => {
             forceUpdate()
         })
         return ()=>{unsubscribe()}
-    },[])
+    },[subscribe])
     return <WraperComponent {...props} {...stateProps} {...dispatchProps} />
 }
 
+export function useStore(){
+    const store = useContext(Context)
+    console.log(store.getState())
+    return store
+}

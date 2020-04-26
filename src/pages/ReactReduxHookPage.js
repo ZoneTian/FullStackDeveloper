@@ -1,5 +1,6 @@
 import React,{useCallback} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+// import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from '../kredux'
 
 export default function ReactReduxHookPage() {
     const count = useSelector(({home})=>home);
@@ -9,7 +10,7 @@ export default function ReactReduxHookPage() {
     },[dispatch])
     return (
         <div>
-            <h3>ReactReduxHookPage</h3>
+            <h3>ReactRedux2HookPage</h3>
             <p>{count}</p>
             <button onClick={add}>addSecond</button>
         </div>
