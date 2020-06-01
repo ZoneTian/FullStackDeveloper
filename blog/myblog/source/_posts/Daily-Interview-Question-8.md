@@ -74,4 +74,62 @@ Generator 函数的执行必须靠执行器，所以才有了`co`模块，而`as
 
 > <a href = "https://muyiy.cn/question/async/9.html" >从async/await到单向链表</a>
 
-## 
+##其他可以实现同步的方法
+
+#### 回调函数（callback）
+
+**缺点：回调地狱，不能用 try catch 捕获错误，不能 return**
+
+根本问题在于：
+
+- 缺乏顺序性：回调低于导致的调试困难，和大脑的思维方式不符合，缺乏可读性
+- 嵌套函数存在耦合性，一旦有所改动，就会牵一发动全身，**控制反转**
+- 嵌套太多很难处理错误
+
+**优点：简单、容易理解和部署**
+
+#### 事件监听
+
+事件驱动模式，任务的执行不取决于代码的顺序而是某个事件是否发生。
+
+```
+//jquery
+f1.on('done', f2);
+　
+　
+　function f1(){
+
+　　　　setTimeout(function () {
+
+　　　　　　// f1的任务代码
+
+　　　　　　f1.trigger('done');
+
+　　　　}, 1000);
+
+　　}
+```
+
+**优点：比较容易理解，可以绑定多个事件，每个事件都可以指定多个回调函数，而且可以去耦合，有利于模块化**
+
+**缺点：整个程序都要变成事件驱动型，运行流程不清晰**
+
+#### 发布订阅
+
+<a href="[http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html](http://www.ruanyifeng.com/blog/2012/12/asynchronous＿javascript.html)">Javascript异步编程的4种方法</a>
+
+####Promise
+
+Promise 实现了链式调用，也就是说每次 then 后返回的都是一个全新 Promise，如果我们在 then 中 return ，return 的结果会被 Promise.resolve() 包装
+
+**优点：解决了回调地狱的问题**
+
+**缺点：无法取消 Promise ，错误需要通过回调函数来捕获**
+
+#### Generator
+
+**特点：可以控制函数的执行**，可以配合 co 函数库
+
+### Promise 构造函数是同步执行还是异步执行，那么 then 方法呢？
+
+**promise构造函数是同步执行的，then方法是异步执行的**
